@@ -5,6 +5,7 @@ Projeto desenvolvido como parte do Programa Best Minds 2024 da Everymind
 ## Pré-requisitos
 
 - .NET 8
+- SQL Server
 - Node.js
 - npm
 
