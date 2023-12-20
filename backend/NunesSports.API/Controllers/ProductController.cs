@@ -1,33 +1,82 @@
 using Microsoft.AspNetCore.Mvc;
+using NunesSports.Domain.Entities;
+using NunesSports.Infra.Data;
+using NunesSports.Infra.Repositories;
 
 namespace NunesSports.API.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route(template: "api/v1/products")]
     public class ProductController : ControllerBase
     {
-        private static readonly string[] Summaries = new[]
-        {
-            "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-        };
+        private readonly AppDbContext _context;
+        private readonly IProductRepository _productRepository;
 
-        private readonly ILogger<ProductController> _logger;
-
-        public ProductController(ILogger<ProductController> logger)
+        public ProductController(AppDbContext context, IProductRepository productRepository)
         {
-            _logger = logger;
+            _context = context;
+            _productRepository = productRepository;
         }
 
-        [HttpGet(Name = "GetWeatherForecast")]
-        public IEnumerable<WeatherForecast> Get()
+        [HttpGet]
+        public async Task<IActionResult> GetAll()
         {
-            return Enumerable.Range(1, 5).Select(index => new WeatherForecast
+            List<Product> products = await _productRepository.GetAllAsync();
+
+            return Ok(products);
+        }
+        [HttpGet("{id}")]
+        public async Task<ActionResult<Product>> GetById(int id)
+        {
+            Product product = await _productRepository.GetByIdAsync(id);
+
+            if (product == null)
             {
-                Date = DateOnly.FromDateTime(DateTime.Now.AddDays(index)),
-                TemperatureC = Random.Shared.Next(-20, 55),
-                Summary = Summaries[Random.Shared.Next(Summaries.Length)]
-            })
-            .ToArray();
+                return NotFound();
+            }
+
+            return Ok(product);
         }
+        [HttpPost]
+        public async Task<IActionResult> Create(Product product)
+        {
+            Product newProduct = await _productRepository.CreateAsync(product);
+
+            return CreatedAtAction(nameof(GetById), new { id = product.Id }, newProduct);
+        }
+        [HttpPut("{id}")]
+        public async Task<IActionResult> Update (int id, Product product)
+        {
+            if (id != product.Id)
+            {
+                return BadRequest();
+            }
+            Product productToUpdate = await _productRepository.GetByIdAsync(id);
+
+            if (productToUpdate != null)
+            {
+                await _productRepository.UpdateAsync(id, product);
+
+                return Ok(productToUpdate);
+            }
+
+            return NotFound();
+        }
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> Delete(int id)
+        {
+            Product productToDelete = await _productRepository.GetByIdAsync(id);
+
+            if (productToDelete != null)
+            {
+                await _productRepository.DeleteAsync(id);
+
+                return Ok(productToDelete);
+            }
+
+            return NotFound();
+        }
+
+
     }
 }

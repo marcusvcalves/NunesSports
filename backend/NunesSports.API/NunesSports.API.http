@@ -1,6 +1,12 @@
 @NunesSports.API_HostAddress = http://localhost:5286
 
-GET {{NunesSports.API_HostAddress}}/weatherforecast/
+GET {{NunesSports.API_HostAddress}}/api/v1/products
 Accept: application/json
 
 ###
+
+GET {{NunesSports.API_HostAddress}}/api/v1/products/1
+Accept: application/json
+
+###
+
