@@ -1,6 +1,6 @@
 # NunesSports
 
-Projeto com operações CRUD para criação de um produto utilizando React e .NET
+Projeto com operações CRUD para criação de um produto utilizando React e .NET utilizando Domain-Driven Design
 
 
 ## Pré-requisitos
