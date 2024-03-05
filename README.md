@@ -1,6 +1,7 @@
-# Desafio_Everymind
+# NunesSports
 
-Projeto desenvolvido como parte do Programa Best Minds 2024 da Everymind
+Projeto com operações CRUD para criação de um produto utilizando React e .NET
+
 
 ## Pré-requisitos
 
