@@ -1,4 +1,4 @@
-# NunesSports
+# nunes-sports
 
 Projeto com operações CRUD para criação de um produto utilizando React e .NET utilizando Domain-Driven Design
 
