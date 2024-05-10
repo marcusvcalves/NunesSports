@@ -24,9 +24,6 @@ Projeto com operações CRUD para criação de um produto utilizando React e .NE
    # Restaure as dependências
    dotnet restore
    
-   # Compile o projeto
-   dotnet build
-   
    # Inicie o servidor
    dotnet run --project NunesSports.API
 
